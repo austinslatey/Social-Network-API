@@ -1,11 +1,11 @@
-const { Thought, User } = require('../../models');
+const { Thought, User } = require('../models');
 
 const thoughts = {
     //get all thoughts
     getAllThoughts(req, res) {
         Thought.find({})
         .populate({
-            path: 'user',
+            path: 'username',
             select: '-__v'
         })
         .select('-__v')
@@ -21,7 +21,7 @@ const thoughts = {
     getThoughtById({ params }, res) {
         Thought.findOne({ _id: params.id })
             .populate({
-                path: 'user',
+                path: 'username',
                 select: '-__v'
             })
            .select('-__v')
@@ -34,7 +34,7 @@ const thoughts = {
     },
 
     //create a thought
-    createThought({ params, body }, res) {
+    createAthought({ params, body }, res) {
         Thought.create(body)
             .then(({ _id}) => {
                 return User.findOneAndUpdate(
